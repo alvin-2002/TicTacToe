@@ -349,7 +349,7 @@ function disableGameFunctions(){
         btn.disabled = true;
     });
 
-    start.textContent = 'Replay';
+    start.textContent = 'Play Again';
     start.style.background = '#bbb';
 }
 
