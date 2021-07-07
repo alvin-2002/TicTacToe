@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="images/tictactoe2.avif">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>TicTacToe</title>
+</head>
+<body>
+    <div class="container">
+        <div class="display-score">
+           <p class="player1">
+               <span class="p1">Player 1(O)</span>
+        
+               <span class="score" id="score1">0</span>
+           </p>
+           <p class="ties">
+               <span class="tie">Tie</span>
+               <span class="score" id="score-tie">0</span>
+           </p>
+           <p class="player2">
+               <span class="p2">Player 2(X)</span>
+               <span class="score" id="score2">0</span>
+           </p>
+        </div>
+        <table>
+            <tr>
+                <td class="cell" id="0"></td>
+                <td class="cell" id="1"></td>
+                <td class="cell" id="2"></td>
+            </tr>
+        
+            <tr>
+                <td class="cell" id="3"></td>
+                <td class="cell" id="4"></td>
+                <td class="cell" id="5"></td>
+            </tr>
+        
+            <tr>
+                <td class="cell" id="6"></td>
+                <td class="cell" id="7"></td>
+                <td class="cell" id="8"></td>
+            </tr>
+        </table>
+        <div class="game-functions">
+            <div class="functions">
+                <div class="box">
+                    <form action="">
+                        <input type="radio" name="player-1" id="humanPlayer" checked>
+                        <label for="humanPlayer">Human Player (O) </label>
+                        <hr>
+                        <input type="radio" name="player-1" id="computerPlayer">
+                        <label for="computerPlayer">Computer Player (O) </label>
+                    </form>
+                    <form action="" class="difficulty-level">
+                        <span>Difficulty :</span>
+                        <input type="radio" name="p1-level" id="1">
+                        <label for="1">1</label>
+                        <input type="radio" name="p1-level" id="2">
+                        <label for="2">2</label>
+                        <input type="radio" name="p1-level" id="3" checked>
+                        <label for="3">3</label>
+                    </form>
+                </div>
+                <div class="box">
+                    <form action="">
+                        <input type="radio" name="player-2" id="humanPlayer">
+                        <label for="humanPlayer">Human Player (X) </label>
+                        <hr>
+                        <input type="radio" name="player-2" id="computerPlayer" checked>
+                        <label for="computerPlayer">Computer Player (X) </label>
+                    </form>
+                    <form action="" class="difficulty-level">
+                        <span>Difficulty :</span>
+                        <input type="radio" name="p2-level" id="1">
+                        <label for="1">1</label>
+                        <input type="radio" name="p2-level" id="2">
+                        <label for="2">2</label>
+                        <input type="radio" name="p2-level" id="3" checked>
+                        <label for="3">3</label>
+                    </form>
+                </div>
+
+                <div class="btn">
+                    <div class="box start-end">
+                        <button id="startGame" onclick="startGame()">Start</button>
+                        <!-- <form action="">
+                            <input type="radio" name="start-first" id="O">
+                            <label for="O">O begins</label>
+                            <input type="radio" name="start-first" id="X">
+                            <label for="X">X begins</label>
+                        </form> -->
+                    </div>
+                    <div class="box start-end">
+                        <button onClick="window.location.reload()">Reset</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+<!-- onClick="window.location.reload()" -->
