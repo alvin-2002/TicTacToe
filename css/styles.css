@@ -15,34 +15,12 @@ body{
 }
 
 .container {
-        /* display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    justify-content: center; */
     display: grid;
-    
     grid-template-columns: auto-fit 0.9fr 0.9fr 1fr auto-fit;
-    /* grid-template-rows:  1fr 1fr ; */
-
-    /* grid-template-rows: 1fr 1fr 1fr; */
-    /* grid-template: 1fr 1fr 1fr / 1fr 2fr 1fr; */
-    /* justify-items: center; */
-    /* grid-template-areas: "score-board" "score-board" "."
-                         "board" "board" "game-settings"
-                         "board" "board" "game-settings"; */
-    /* margin: 0; */
-
-    /* height: 100vh; */
     gap: 0;
-    /* column-gap: 20px; */
 }
 
 .display-score{
-    /* grid-area: score-board; */
-    /* grid-row: 1 / 2;
-    grid-column: 1 / 4; */
     grid-row: 2 / 3;
     grid-column: 2 / 4;
     align-self: center;
@@ -114,12 +92,29 @@ table tr td:last-child{
     border-right: 0;
 }
 
+.endgame {
+    display: none;
+    grid-row: 3/4;
+    grid-column: 2/4;
+    align-self: center;
+    justify-self: center;
+    z-index: 999;
+    padding: 80px;
+    text-align: center;
+    background-color: rgba(205, 133, 63, 0.8);
+}
+
+.endgame .text{
+    font-size: 40px;
+    color: #fff;
+}
 
 .game-functions {
     grid-row: 3/4;
     grid-column: 4/5;
     align-self: center;
     justify-self: start;
+    z-index: 99;
 
  }
 
@@ -167,6 +162,10 @@ table tr td:last-child{
         padding: 0 3rem;
     }
 
+    .endgame{
+        padding: 60px 60px;
+    }
+
     td {
         height: 100px;
         width: 100px;
@@ -175,6 +174,7 @@ table tr td:last-child{
 
     .box {
         font-size: 1.7rem;
+        margin-bottom: 1rem;
     }
 }
 
@@ -187,6 +187,9 @@ table tr td:last-child{
         margin-bottom: 18px;
     }
     table {
+        grid-column: 2/3;
+    }
+    .endgame{
         grid-column: 2/3;
     }
     .game-functions{
@@ -225,13 +228,18 @@ table tr td:last-child{
     table {
         grid-column: 1/2;
     }
+    .endgame{
+        grid-column: 1/2;
+        padding: 50px 50px;
+    }
+    
     .game-functions{
         grid-column: 1/2;
         grid-row: 4/5;
     }
     .display-score p{
-        font-size: 1.3rem;
-        padding: 0 3rem;
+        font-size: 1.6rem;
+        padding: 0 2.2rem;
     }
 
     td {
@@ -241,6 +249,7 @@ table tr td:last-child{
     }
 
     .box {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
     }
 }

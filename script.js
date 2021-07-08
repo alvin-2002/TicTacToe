@@ -4,9 +4,10 @@ const tieStyle = document.querySelector(".tie");
 const allButtons = document.querySelectorAll("input[type=radio]");
 const start = document.getElementById('startGame');
 const cells = document.querySelectorAll('.cell');
+const displayWin = document.querySelector('.endgame');
 
 var originalBoard;
-var pturn;
+var pturn = -1;
 
 var isHumanTurn = true;
 
@@ -43,8 +44,8 @@ const winCombos = [
 
 
 async function startGame(){
-    // player turn for human vs human
-    pturn = 1;
+
+    pturn = -1 * pturn;
 
     disableGameFunctions();
 
@@ -55,11 +56,10 @@ async function startGame(){
 
     removeScoreColor();
 
-    p1Style.classList.add('turn-color');
+    (pturn == 1) ? p1Style.classList.add('turn-color') : p2Style.classList.add('turn-color');
 
     changePlayerDisplay();
     
-
     for (var i = 0; i < cells.length; i++){
         isHumanTurn = true;
         cells[i].innerText = '';
@@ -68,12 +68,27 @@ async function startGame(){
     }
 
     // computer plays first
-    if (player1.playerType == 'computerPlayer'){
-        await aiMove(player1, player2);
-        if (player2.playerType == 'computerPlayer'){
-             Computer_vs_Computer(player1, player2);
+    if (pturn == 1){
+        if (player1.playerType == 'computerPlayer'){
+            isHumanTurn = false;
+            await aiMove(player1, player2);
+            isHumanTurn = true;
+            if (player2.playerType == 'computerPlayer'){
+                 Computer_vs_Computer(player1, player2);
+            }
         }
     }
+    else if (pturn == -1){
+        if (player2.playerType == 'computerPlayer'){
+            isHumanTurn = false;
+            await aiMove(player2, player1);
+            isHumanTurn = true;
+            if (player1.playerType == 'computerPlayer'){
+                 Computer_vs_Computer(player2, player1);
+            }
+        }
+    }
+
 }
     
 
@@ -145,9 +160,7 @@ async function Human_vs_Computer(p1, p2, square){
 
     if (!isHumanTurn) return;
     if (typeof originalBoard[square.target.id] == 'number'){
-
         (p1.p == 'player1') ? setPlayer2Color() : setPlayer1Color(); 
-
         placeMove(square.target.id, p1);
         isHumanTurn = false;
         await aiMove(p2, p1);
@@ -164,8 +177,6 @@ async function Computer_vs_Computer(p1, p2){
 
 function aiMove(currentPlayer, opponentPlayer){
     if (!checkWin(originalBoard, opponentPlayer) && !checkTie()){
-        // (currentPlayer.p == 'player1') ? p2Style.classList.add('active') :  p1Style.classList.remove('active');
-
         return new Promise((resolve) => {
             setTimeout(()=>{
                 (currentPlayer.p == 'player1') ? setPlayer2Color() : setPlayer1Color(); 
@@ -316,11 +327,15 @@ function updatePlayerWin(gameWon){
     if (gameWon.player == 'O') {
         score1++;
         p1Style.classList.add('turn-color');
+        displayWin.style.display = "block";
+        displayWin.querySelector(".text").innerText = 'O WINS';
         document.getElementById('score1').textContent = score1;
     }
     else {
         score2++;
         p2Style.classList.add('turn-color');
+        displayWin.style.display = "block";
+        displayWin.querySelector(".text").innerText = 'X WINS';
         document.getElementById('score2').textContent = score2;
     } 
 }
@@ -331,7 +346,10 @@ function updateTieScore(){
         cells[i].removeEventListener('click', gameMode, false);
     }
     scoreTie++;
-    document.getElementById('score-tie').textContent = scoreTie;
+    // document.getElementById('score-tie').textContent = scoreTie;
+    displayWin.style.display = "block";
+    displayWin.querySelector(".text").innerText = 'TIE';
+    // document.querySelector(".endgame .text").innerText = 'TIE';
     tieStyle.classList.add('tie-color');
 }
 
@@ -367,6 +385,8 @@ function removeScoreColor(){
     if (p1Style.classList.contains('turn-color')) p1Style.classList.remove('turn-color');
     if (p2Style.classList.contains('turn-color')) p2Style.classList.remove('turn-color');
     if (tieStyle.classList.contains('tie-color')) tieStyle.classList.remove('tie-color');
+    if (displayWin.style.display == "block") displayWin.style.display = "none";
+
 }
 
 function changePlayerDisplay(){
