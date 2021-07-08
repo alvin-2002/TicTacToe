@@ -5,6 +5,7 @@ const allButtons = document.querySelectorAll("input[type=radio]");
 const start = document.getElementById('startGame');
 const cells = document.querySelectorAll('.cell');
 const displayWin = document.querySelector('.endgame');
+const playerStart_First = document.querySelector('.start-first');
 
 var originalBoard;
 var pturn = -1;
@@ -49,14 +50,22 @@ async function startGame(){
 
     disableGameFunctions();
 
+    document.querySelector('.start-end').style.display = 'none';
+
     //fill originalBoard with 0s
     originalBoard = Array.from(Array(9).keys());
 
     setGameSetting();
 
     removeScoreColor();
-
-    (pturn == 1) ? p1Style.classList.add('turn-color') : p2Style.classList.add('turn-color');
+    if (pturn == 1){
+        p1Style.classList.add('turn-color');
+        playerStart_First.textContent = 'O starts first';
+    }
+    else if (pturn == -1){
+        p2Style.classList.add('turn-color');
+        playerStart_First.textContent = 'X starts first';
+    }
 
     changePlayerDisplay();
     
@@ -203,7 +212,7 @@ function placeMove(squareId, currentPlayer){
     } 
     else if (checkTie()){
         removeScoreColor();
-        updateTieScore()
+        updateTieScore();
     }
 }
 
@@ -254,12 +263,16 @@ function botLevel_3(newBoard, player, currentPlayer, opponentPlayer){
         currentMove.index = newBoard[index];
         newBoard[index] = player;
 
-        if (player == currentPlayer.character){
-              var result = botLevel_3(newBoard, opponentPlayer.character,  currentPlayer, opponentPlayer);
-              currentMove.score = result.score;
-        } 
-
-        else {
+        if (player == currentPlayer.character) {
+            if (checkWin(newBoard, currentPlayer)) {
+              currentMove.score = 10;
+              newBoard[index] = currentMove.index;
+              return currentMove;
+            }
+            var result = botLevel_3(newBoard, opponentPlayer.character,  currentPlayer, opponentPlayer);
+            currentMove.score = result.score;
+          } 
+          else {
             var result = botLevel_3(newBoard, currentPlayer.character, currentPlayer, opponentPlayer);
             currentMove.score = result.score;
         }
@@ -323,11 +336,12 @@ function updatePlayerWin(gameWon){
     }
 
     removeScoreColor();
-
+    displayWin.querySelector(".play-again").innerText = 'Play Again';
     if (gameWon.player == 'O') {
         score1++;
         p1Style.classList.add('turn-color');
         displayWin.style.display = "block";
+        // displayWin.innerText = 'O WINS';
         displayWin.querySelector(".text").innerText = 'O WINS';
         document.getElementById('score1').textContent = score1;
     }
@@ -335,9 +349,12 @@ function updatePlayerWin(gameWon){
         score2++;
         p2Style.classList.add('turn-color');
         displayWin.style.display = "block";
+    
         displayWin.querySelector(".text").innerText = 'X WINS';
         document.getElementById('score2').textContent = score2;
     } 
+
+    displayWin.addEventListener('click', startGame, false);
 }
 
 function updateTieScore(){
@@ -345,12 +362,13 @@ function updateTieScore(){
         cells[i].style.backgroundColor = "green";
         cells[i].removeEventListener('click', gameMode, false);
     }
+    displayWin.querySelector(".play-again").innerText = 'Play Again';
     scoreTie++;
-    // document.getElementById('score-tie').textContent = scoreTie;
     displayWin.style.display = "block";
     displayWin.querySelector(".text").innerText = 'TIE';
-    // document.querySelector(".endgame .text").innerText = 'TIE';
     tieStyle.classList.add('tie-color');
+    document.getElementById('score-tie').textContent = scoreTie;
+    displayWin.addEventListener('click', startGame, false);
 }
 
 function emptySquares(){
@@ -367,8 +385,8 @@ function disableGameFunctions(){
         btn.disabled = true;
     });
 
-    start.textContent = 'Play Again';
-    start.style.background = '#bbb';
+    // start.textContent = 'Play Again';
+    // start.style.background = '#bbb';
 }
 
 function setPlayer2Color(){

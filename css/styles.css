@@ -28,13 +28,19 @@ body{
 
 }
 
-.display-score .score, .display-score .score1, .display-score .score2{
+.display-score .score, .display-score .score1, .display-score .score2 .display-score{
     text-align: center;
+}
+
+.display-score .start-first{
+    display: block;
+    text-align: center;
+    font-weight: 900;
+    color: crimson;
 }
 
 .display-score p{
     display: inline-block;
-
     text-transform: uppercase;
     font-size: 2.2rem;
     line-height: 2;
@@ -108,6 +114,19 @@ table tr td:last-child{
     font-size: 40px;
     color: #fff;
 }
+
+.endgame .play-again{
+    font-size: 25px;
+    font-weight: 900;
+    color: rgb(210, 210, 211);
+    
+}
+
+.endgame:hover,
+.endgame .text:hover{
+    cursor: pointer;
+}
+
 
 .game-functions {
     grid-row: 3/4;
