@@ -6,6 +6,7 @@ const start = document.getElementById('startGame');
 const cells = document.querySelectorAll('.cell');
 const displayWin = document.querySelector('.endgame');
 const playerStart_First = document.querySelector('.start-first');
+const boxes = document.querySelectorAll('.box');
 
 var originalBoard;
 var pturn = -1;
@@ -42,15 +43,27 @@ const winCombos = [
     [6,4,2]
 ]
 
-
+document.querySelector(".board").style.display = 'none';
+document.querySelector(".display-score").style.display = 'none';
+document.querySelector(".quit-btn").style.display = 'none';
 
 async function startGame(){
+    document.querySelector(".welcome-msg").style.display = 'none';
+    document.querySelector(".board").style.display = '';
+    document.querySelector(".display-score").style.display = '';
+    document.querySelector(".functions").classList.add('function-replaced');
 
+    for (var i = 0; i < boxes.length; i++){
+        boxes[i].classList.add('box-replaced');
+    }
+
+    document.querySelector(".btn").classList.add('btn-replaced');
     pturn = -1 * pturn;
 
     disableGameFunctions();
 
     document.querySelector('.start-end').style.display = 'none';
+    document.querySelector(".quit-btn").style.display = '';
 
     //fill originalBoard with 0s
     originalBoard = Array.from(Array(9).keys());
@@ -70,7 +83,7 @@ async function startGame(){
     changePlayerDisplay();
     
     for (var i = 0; i < cells.length; i++){
-        isHumanTurn = true;
+        // isHumanTurn = true;
         cells[i].innerText = '';
         cells[i].style.removeProperty('background-color');
         cells[i].addEventListener('click', gameMode, false);
