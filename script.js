@@ -11,7 +11,7 @@ const boxes = document.querySelectorAll('.box');
 var originalBoard;
 var pturn = -1;
 
-var isHumanTurn = true;
+var isHumanTurn;
 
 var score1 = 0;
 var score2 = 0;
