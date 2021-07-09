@@ -146,7 +146,7 @@ function setPlayerSetting(player, playerType, difficulty_level){
 }
 
 function gameMode(square){
-
+    square.preventDefault();
     if (player1.playerType == 'humanPlayer' && player2.playerType == 'humanPlayer'){
         Human_vs_Human(player1, player2, square);
     }
