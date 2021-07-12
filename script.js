@@ -44,44 +44,51 @@ const winCombos = [
     [6,4,2]
 ]
 
-hidePages(document.querySelector(".board"));
-hidePages(document.querySelector(".display-score"));
-hidePages(document.querySelector(".quit-btn"));
-hidePages(document.querySelector(".functions"));
-hidePages(document.querySelector(".welcome-msg"));
 
 
-navigate(document.querySelector(".welcome-msg"));
-navigate(document.querySelector(".functions"));
+document.querySelector(".board").style.display = 'none';
+document.querySelector(".display-score").style.display = 'none';
+document.querySelector(".quit-btn").style.display = 'none';
+animateDisappear(document.querySelector(".functions"));
+animateDisappear(document.querySelector(".welcome-msg"));
 
+animateAppear(document.querySelector(".welcome-msg"));
+animateAppear(document.querySelector(".functions"));
 
+function makeChangesForMobileFunction() {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        document.querySelector(".functions").classList.add('function-replaced');
+        for (var i = 0; i < boxes.length; i++){
+            boxes[i].classList.add('box-replaced');
+        }
+        document.querySelector(".btn").classList.add('btn-replaced');
+      }, 1000);
+      setTimeout(resolve, 1000);
+    });
+  }
 async function startGame(){
-    hidePages(document.querySelector(".welcome-msg"));
-    hidePages(document.querySelector(".functions"));
-    hidePages(document.querySelector('.start-end'));
-    // document.querySelector(".board").style.display = '';
-    // document.querySelector(".board").style.opacity = '0';
-    navigate(document.querySelector(".board"));
-    navigate(document.querySelector(".display-score"));
-    navigate(document.querySelector(".quit-btn"));
     
-    // navigate(playerStart_First);
-    // document.querySelector(".display-score").style.display = '';
-    document.querySelector(".functions").classList.add('function-replaced');
-    navigate(document.querySelector(".function-replaced"));
-    
+    const animation = async () => {
+        animateDisappear(document.querySelector(".functions"));
+        animateDisappear(document.querySelector(".welcome-msg"));
+        animateDisappear(document.querySelector(".start-end"));
 
-    for (var i = 0; i < boxes.length; i++){
-        boxes[i].classList.add('box-replaced');
+        await makeChangesForMobileFunction();
+
+        animateAppear(document.querySelector(".functions"));
+        animateAppear(document.querySelector(".board"));
+        animateAppear(document.querySelector(".display-score"));
+        animateAppear(document.querySelector(".quit-btn"));
     }
 
-    document.querySelector(".btn").classList.add('btn-replaced');
+
+    animation();
+
     pturn = -1 * pturn;
 
     disableGameFunctions();
 
-    // document.querySelector('.start-end').style.display = 'none';
-   
 
     //fill originalBoard with 0s
     originalBoard = Array.from(Array(9).keys());
@@ -131,17 +138,17 @@ async function startGame(){
 
 }
 
-function hidePages(k) {
-    var current = k;
+function animateDisappear(queryClass) {
+    var current = queryClass;
       current.style.opacity = 0;
       setTimeout(function(current) {
         current.style.display = 'none';
       }, 1000, current);
   }
     
-function navigate(k) {
+function animateAppear(queryClass) {
     // var current = document.querySelector(".board");
-    var current = k;
+    var current = queryClass;
     setTimeout(function(current) {
       current.style.display = '';
       setTimeout(function(current) {

@@ -25,7 +25,8 @@ body{
     grid-column: 2 / 4;
     align-self: center;
     justify-self: center;
-    opacity: 1;
+    /* display: none; */
+    opacity: 0;
     transition: opacity 1s ease-in-out;
 }
 
@@ -66,7 +67,8 @@ body{
 }
 
 .board {
-    opacity: 1;
+    opacity: 0;
+    /* display: none; */
     /* -webkit-transition: opacity 1s;
     -o-transition: opacity 1s; */
     transition: opacity 1s ease-in-out;
@@ -142,9 +144,6 @@ table tr td:last-child{
     text-align: center;
     font-size: 2rem;
     grid-column: 4/5;
-    opacity: 0;
-    /* -webkit-transition: opacity 1s;
-    -o-transition: opacity 1s; */
     transition: opacity 1s ease-in-out;
 }
 
@@ -157,8 +156,6 @@ table tr td:last-child{
     grid-column: 4/5;
     align-self: center;
     justify-self: start;
-
-
  }
 
  .functions{ 
@@ -166,7 +163,7 @@ table tr td:last-child{
     grid-template: repeat(3, auto-fit) / repeat(1, auto-fit);
     align-self: center;
     justify-content: start;
-    opacity: 1;
+
     transition: opacity 1s ease-in-out;
 
  }
