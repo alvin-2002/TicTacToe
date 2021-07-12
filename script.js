@@ -49,8 +49,8 @@ const winCombos = [
 document.querySelector(".board").style.display = 'none';
 document.querySelector(".display-score").style.display = 'none';
 document.querySelector(".quit-btn").style.display = 'none';
-animateDisappear(document.querySelector(".functions"));
-animateDisappear(document.querySelector(".welcome-msg"));
+// animateDisappear(document.querySelector(".functions"));
+// animateDisappear(document.querySelector(".welcome-msg"));
 
 animateAppear(document.querySelector(".welcome-msg"));
 animateAppear(document.querySelector(".functions"));
