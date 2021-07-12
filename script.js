@@ -8,6 +8,7 @@ const displayWin = document.querySelector('.endgame');
 const playerStart_First = document.querySelector('.start-first');
 const boxes = document.querySelectorAll('.box');
 
+
 var originalBoard;
 var pturn = -1;
 
@@ -43,15 +44,32 @@ const winCombos = [
     [6,4,2]
 ]
 
-document.querySelector(".board").style.display = 'none';
-document.querySelector(".display-score").style.display = 'none';
-document.querySelector(".quit-btn").style.display = 'none';
+hidePages(document.querySelector(".board"));
+hidePages(document.querySelector(".display-score"));
+hidePages(document.querySelector(".quit-btn"));
+hidePages(document.querySelector(".functions"));
+hidePages(document.querySelector(".welcome-msg"));
+
+
+navigate(document.querySelector(".welcome-msg"));
+navigate(document.querySelector(".functions"));
+
 
 async function startGame(){
-    document.querySelector(".welcome-msg").style.display = 'none';
-    document.querySelector(".board").style.display = '';
-    document.querySelector(".display-score").style.display = '';
+    hidePages(document.querySelector(".welcome-msg"));
+    hidePages(document.querySelector(".functions"));
+    hidePages(document.querySelector('.start-end'));
+    // document.querySelector(".board").style.display = '';
+    // document.querySelector(".board").style.opacity = '0';
+    navigate(document.querySelector(".board"));
+    navigate(document.querySelector(".display-score"));
+    navigate(document.querySelector(".quit-btn"));
+    
+    // navigate(playerStart_First);
+    // document.querySelector(".display-score").style.display = '';
     document.querySelector(".functions").classList.add('function-replaced');
+    navigate(document.querySelector(".function-replaced"));
+    
 
     for (var i = 0; i < boxes.length; i++){
         boxes[i].classList.add('box-replaced');
@@ -62,8 +80,8 @@ async function startGame(){
 
     disableGameFunctions();
 
-    document.querySelector('.start-end').style.display = 'none';
-    document.querySelector(".quit-btn").style.display = '';
+    // document.querySelector('.start-end').style.display = 'none';
+   
 
     //fill originalBoard with 0s
     originalBoard = Array.from(Array(9).keys());
@@ -112,7 +130,25 @@ async function startGame(){
     }
 
 }
+
+function hidePages(k) {
+    var current = k;
+      current.style.opacity = 0;
+      setTimeout(function(current) {
+        current.style.display = 'none';
+      }, 1000, current);
+  }
     
+function navigate(k) {
+    // var current = document.querySelector(".board");
+    var current = k;
+    setTimeout(function(current) {
+      current.style.display = '';
+      setTimeout(function(current) {
+        current.style.opacity = 1;
+      }, 10, current);
+    }, 1000, current);
+  }
 
 function setGameSetting(){
     var p1Type = document.getElementsByName('player-1');
@@ -364,7 +400,11 @@ function updatePlayerWin(gameWon){
         displayWin.style.display = "block";
     
         displayWin.querySelector(".text").innerText = 'X WINS';
-        document.getElementById('score2').textContent = score2;
+        // document.getElementById('score2').textContent = '';
+        setTimeout(() => {
+            document.getElementById('score2').textContent = score2;
+        }, 500);
+       
     } 
 
     displayWin.addEventListener('click', startGame, false);
@@ -397,9 +437,6 @@ function disableGameFunctions(){
     allButtons.forEach((btn) => {
         btn.disabled = true;
     });
-
-    // start.textContent = 'Play Again';
-    // start.style.background = '#bbb';
 }
 
 function setPlayer2Color(){
