@@ -1,16 +1,23 @@
-const p1Style = document.querySelector(".p1");
-const p2Style = document.querySelector(".p2");
-const tieStyle = document.querySelector(".tie");
-const allButtons = document.querySelectorAll("input[type=radio]");
+const p1Style = document.querySelector('.p1');
+const p2Style = document.querySelector('.p2');
+const tieStyle = document.querySelector('.tie');
+const allButtons = document.querySelectorAll('input[type=radio]');
 const start = document.getElementById('startGame');
 const cells = document.querySelectorAll('.cell');
 const displayWin = document.querySelector('.endgame');
 const playerStart_First = document.querySelector('.start-first');
 const boxes = document.querySelectorAll('.box');
 
+const gameBoard = document.querySelector('.board');
+const display_score = document.querySelector('.display-score');
+const quit_btn = document.querySelector('.quit-btn');
+const welcome_msg = document.querySelector('.welcome-msg');
+const game_functions = document.querySelector('.functions');
+
 
 var originalBoard;
 var pturn = -1;
+let count = 0;
 
 var isHumanTurn = true;
 
@@ -46,19 +53,17 @@ const winCombos = [
 
 
 
-document.querySelector(".board").style.display = 'none';
-document.querySelector(".display-score").style.display = 'none';
-document.querySelector(".quit-btn").style.display = 'none';
-// animateDisappear(document.querySelector(".functions"));
-// animateDisappear(document.querySelector(".welcome-msg"));
+gameBoard.style.display = 'none';
+display_score.style.display = 'none';
+quit_btn.style.display = 'none';
 
-animateAppear(document.querySelector(".welcome-msg"));
-animateAppear(document.querySelector(".functions"));
+animateAppear(welcome_msg);
+animateAppear(game_functions);
 
 function makeChangesForMobileFunction() {
     return new Promise(resolve => {
       setTimeout(() => {
-        document.querySelector(".functions").classList.add('function-replaced');
+        game_functions.classList.add('function-replaced');
         for (var i = 0; i < boxes.length; i++){
             boxes[i].classList.add('box-replaced');
         }
@@ -67,28 +72,33 @@ function makeChangesForMobileFunction() {
       setTimeout(resolve, 1000);
     });
   }
+
+async function animation() {
+    animateDisappear(game_functions);
+    animateDisappear(welcome_msg);
+    animateDisappear(document.querySelector('.start-quit-btn'));
+
+    await makeChangesForMobileFunction();
+
+    animateAppear(game_functions);
+    animateAppear(gameBoard);
+    animateAppear(display_score);
+    animateAppear(quit_btn);
+}
+
+
+
 async function startGame(){
     
-    const animation = async () => {
-        animateDisappear(document.querySelector(".functions"));
-        animateDisappear(document.querySelector(".welcome-msg"));
-        animateDisappear(document.querySelector(".start-end"));
+    if (count == 0)  animation();
 
-        await makeChangesForMobileFunction();
-
-        animateAppear(document.querySelector(".functions"));
-        animateAppear(document.querySelector(".board"));
-        animateAppear(document.querySelector(".display-score"));
-        animateAppear(document.querySelector(".quit-btn"));
-    }
-
-
-    animation();
-
+    count++;
+   
     pturn = -1 * pturn;
 
     disableGameFunctions();
 
+  
 
     //fill originalBoard with 0s
     originalBoard = Array.from(Array(9).keys());
@@ -96,6 +106,7 @@ async function startGame(){
     setGameSetting();
 
     removeScoreColor();
+
     if (pturn == 1){
         p1Style.classList.add('turn-color');
         playerStart_First.textContent = 'O starts first';
@@ -108,7 +119,6 @@ async function startGame(){
     changePlayerDisplay();
     
     for (var i = 0; i < cells.length; i++){
-        // isHumanTurn = true;
         cells[i].innerText = '';
         cells[i].style.removeProperty('background-color');
         cells[i].addEventListener('click', gameMode, false);
@@ -143,7 +153,7 @@ function animateDisappear(queryClass) {
       current.style.opacity = 0;
       setTimeout(function(current) {
         current.style.display = 'none';
-      }, 1000, current);
+      }, 500, current);
   }
     
 function animateAppear(queryClass) {
@@ -154,7 +164,7 @@ function animateAppear(queryClass) {
       setTimeout(function(current) {
         current.style.opacity = 1;
       }, 10, current);
-    }, 1000, current);
+    }, 500, current);
   }
 
 function setGameSetting(){
