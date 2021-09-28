@@ -219,6 +219,7 @@ function Human_vs_Human(p1, p2, square){
         if (typeof originalBoard[square.target.id] == 'number'){
             placeMove(square.target.id, p1);
             setPlayer2Color();
+            pturn = -1 * pturn;
         }
     }
 
@@ -226,9 +227,10 @@ function Human_vs_Human(p1, p2, square){
         if (typeof originalBoard[square.target.id] == 'number'){
             placeMove(square.target.id, p2);
             setPlayer1Color();
+            pturn = -1 * pturn;
         }
     }
-    pturn = -1 * pturn;
+    
 }
 
 async function Human_vs_Computer(p1, p2, square){
